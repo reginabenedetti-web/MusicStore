@@ -2,25 +2,26 @@ package musicstore.modelo;
 
 import java.io.Serializable;
 
-public class Usuario implements Serializable {
+public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private int id;
+    
     private String nombre;
     private String apellido;
-    private String nombreUsuario;
-    private String password;
+    private String telefono;
+    private String email;
 
-    public Usuario() {
+    public Cliente() {
     }
 
-    public Usuario(int id, String nombre, String apellido, String nombreUsuario, String password) {
+    public Cliente(int id, String nombre, String apellido, String telefono, String email) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.nombreUsuario = nombreUsuario;
-        this.password = password;
+        this.telefono = telefono;
+        this.email = email;
     }
 
     public int getId() {
@@ -47,20 +48,20 @@ public class Usuario implements Serializable {
         this.apellido = apellido;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
