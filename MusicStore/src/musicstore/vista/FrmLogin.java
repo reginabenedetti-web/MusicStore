@@ -43,6 +43,7 @@ public class FrmLogin extends javax.swing.JFrame {
         setTitle("MusicStore");
         setResizable(false);
 
+        tituloPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tituloPrincipal.setText("MusicStore");
         tituloPrincipal.setName("LblTitulo"); // NOI18N
 
@@ -80,16 +81,15 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(txtPsw, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(167, Short.MAX_VALUE)
+                .addContainerGap(154, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tituloSecundario)
-                            .addComponent(tituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(172, 172, 172))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(149, 149, 149))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(tituloSecundario))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,19 +116,36 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         
+        // Obtener los datos ingresados por el usuario
        String nombreUsuario = txtUsuario.getText();
        String password = new String(txtPsw.getPassword());
+       
+          // Validar que ambos campos estén completos
+       if (nombreUsuario.isBlank() || password.isBlank()) {
+
+        JOptionPane.showMessageDialog(this, "Debe completar el usuario y la contraseña.",
+                "Campos obligatorios",
+                JOptionPane.WARNING_MESSAGE);
+         // Finalizar el método si falta información
+        return;
+    }
+       
        Usuario usuario = usuarioServicio.validarLogin(nombreUsuario, password);
        
+           // Validar las credenciales mediante la capa de servicios
        if(usuario != null){
-           JOptionPane.showMessageDialog(
-        this,
-        "Bienvenido " + usuario.getNombre());
-       }else {
+           FrmPrincipal principal = new FrmPrincipal(data, usuario);
+            principal.setVisible(true);
 
+              // Cerrar la ventana de Login
+            dispose();
+       }else {
+            // Informar que las credenciales son incorrectas
         JOptionPane.showMessageDialog(
                 this,
-                "Usuario o contraseña incorrectos."
+                "Usuario o contraseña incorrectos.",
+                "Error de autenticación",
+                JOptionPane.ERROR_MESSAGE
         );
     }
     }//GEN-LAST:event_btnIngresarActionPerformed

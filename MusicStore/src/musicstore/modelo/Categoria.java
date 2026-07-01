@@ -9,13 +9,15 @@ public class Categoria implements Serializable {
     private int id;
     
     private String nombre;
+    private String descripcion;
 
     public Categoria() {
     }
 
-    public Categoria(int id, String nombre) {
+    public Categoria(int id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public int getId() {
@@ -34,9 +36,17 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     @Override
     public String toString() {
-        return nombre;
+        return nombre + descripcion;
     }
 
 }
