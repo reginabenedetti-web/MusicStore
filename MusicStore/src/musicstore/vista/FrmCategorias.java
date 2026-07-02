@@ -24,29 +24,64 @@ public class FrmCategorias extends javax.swing.JFrame {
     cargarTabla();
 }
    
-private void limpiarCampos() {
+    private void limpiarCampos() {
 
-    txtId.setText("");
-    txtNombre.setText("");
-    txtDescripcion.setText("");
-}
-
-private void cargarTabla() {
-    // Obtener el modelo de la tabla
-    DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
-    // Eliminar todas las filas existentes
-    modelo.setRowCount(0);
-
-    // Recorrer la lista de categorías
-    for (Categoria categoria : data.getCategorias()) {
-        // Agregar una nueva fila a la tabla
-        modelo.addRow(new Object[]{
-            categoria.getId(),
-            categoria.getNombre(),
-            categoria.getDescripcion()
-        });
+        txtId.setText("");
+        txtNombre.setText("");
+        txtDescripcion.setText("");
     }
-} 
+
+    private void cargarTabla() {
+        // Obtener el modelo de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
+        // Eliminar todas las filas existentes
+        modelo.setRowCount(0);
+
+        // Recorrer la lista de categorías
+        for (Categoria categoria : data.getCategorias()) {
+            // Agregar una nueva fila a la tabla
+            modelo.addRow(new Object[]{
+                categoria.getId(),
+                categoria.getNombre(),
+                categoria.getDescripcion()
+            });
+        }
+    }
+
+    private boolean validarCampos() {
+
+        if (txtId.getText().isBlank()
+                || txtNombre.getText().isBlank()
+                || txtDescripcion.getText().isBlank()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe completar todos los campos.",
+                    "Campos obligatorios",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return false;
+        }
+        return true;
+    }
+
+    private Integer obtenerId() {
+
+        try {
+            return Integer.parseInt(txtId.getText().trim());
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El ID debe ser un número entero.",
+                    "Dato inválido",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            txtId.requestFocus();
+            return null;
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,8 +125,18 @@ private void cargarTabla() {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -194,51 +239,36 @@ private void cargarTabla() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-
+  
     }//GEN-LAST:event_txtNombreActionPerformed
   
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    // Verificar que todos los campos estén completos
-    if (txtId.getText().isBlank()
-            || txtNombre.getText().isBlank()
-            || txtDescripcion.getText().isBlank()) {
-
-        JOptionPane.showMessageDialog(this, "Debe completar todos los campos.",
-                "Campos obligatorios", JOptionPane.WARNING_MESSAGE);
+   
+        if (!validarCampos()) {
         return;
     }
-    // Obtener los datos ingresados
-    int id;
-    try {
-        id = Integer.parseInt(txtId.getText().trim());
-    } catch (NumberFormatException e) {
 
-        JOptionPane.showMessageDialog(this,"El ID debe ser un número entero.", "Dato inválido",
-                JOptionPane.ERROR_MESSAGE);
-        txtId.requestFocus();
+    Integer id = obtenerId();
+
+    if (id == null) {
         return;
     }
-    String nombre = txtNombre.getText().trim();
-    String descripcion = txtDescripcion.getText().trim();
 
-    // Crear el objeto Categoria
-    Categoria categoria = new Categoria(id, nombre, descripcion);
+    Categoria categoria = new Categoria(id, txtNombre.getText().trim(), txtDescripcion.getText().trim());
 
-    // Intentar guardar la categoría
     boolean agregado = categoriaServicio.agregar(categoria);
 
     if (agregado) {
 
-        JOptionPane.showMessageDialog(this,"Categoría registrada correctamente.");
-        // Actualizar la tabla 
-       cargarTabla();
+        JOptionPane.showMessageDialog(this, "Categoría registrada correctamente.");
 
-        // Limpiar los campos del formulario
+        cargarTabla();
         limpiarCampos();
+
     } else {
 
-        JOptionPane.showMessageDialog(this, "Ya existe una categoría con ese ID.", "Error",
-               JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ya existe una categoría con ese ID.","Error",
+                JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -246,6 +276,84 @@ private void cargarTabla() {
         // Cerrar el formulario de categorías
         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+   // Verificar que todos los campos estén completos
+    if (!validarCampos()) {
+        return;
+    }
+
+    // Obtener y validar el ID
+    Integer id = obtenerId();
+
+    if (id == null) {
+        return;
+    }
+
+    // Obtener los datos ingresados
+    String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+
+    // Intentar modificar la categoría
+    boolean modificado = categoriaServicio.modificar(id, nombre, descripcion);
+
+    if (modificado) {
+
+        JOptionPane.showMessageDialog(this,"Categoría modificada correctamente.", "Operación exitosa",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        // Actualizar la tabla
+        cargarTabla();
+
+        // Limpiar el formulario
+        limpiarCampos();
+
+    } else {
+
+        JOptionPane.showMessageDialog(this, "No existe una categoría con ese ID.","Error",
+                JOptionPane.ERROR_MESSAGE );
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+    // Obtener y validar el ID
+    Integer id = obtenerId();
+
+    if (id == null) {
+        return;
+    }
+
+    // Confirmar la eliminación
+    int opcion = JOptionPane.showConfirmDialog(this,"¿Está seguro que desea eliminar esta categoría?", "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE );
+
+    // Si el usuario selecciona "No", cancelar la operación
+    if (opcion != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    // Intentar eliminar la categoría
+    boolean eliminado = categoriaServicio.eliminar(id);
+
+    if (eliminado) {
+
+        JOptionPane.showMessageDialog(this,"Categoría eliminada correctamente.", "Operación exitosa",
+                JOptionPane.INFORMATION_MESSAGE );
+
+        // Actualizar la tabla
+        cargarTabla();
+
+        // Limpiar el formulario
+        limpiarCampos();
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,"No existe una categoría con ese ID.","Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

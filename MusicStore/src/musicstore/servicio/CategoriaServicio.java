@@ -13,14 +13,12 @@ public class CategoriaServicio {
     }
     
     public Categoria buscarPorId(int id) {
-    // Recorrer la lista de categorías
+        
     for (Categoria categoria : data.getCategorias()) {
-        // Comparar el ID buscado con el ID de la categoría
         if (categoria.getId() == id) {
             return categoria;
         }
     }
-    // No se encontró ninguna categoría con ese ID
     return null;
 }
     
@@ -38,15 +36,17 @@ public class CategoriaServicio {
    
    public boolean modificar(int id, String nombre, String descripcion) {
 
+       // Buscar la categoría por su ID
     Categoria categoria = buscarPorId(id);
 
     if (categoria == null) {
         return false;
     }
-
+    // Actualizar los datos
     categoria.setNombre(nombre);
     categoria.setDescripcion(descripcion);
 
+    // Guardar los cambios
     Persistencia.guardar(data);
 
     return true;
@@ -54,14 +54,15 @@ public class CategoriaServicio {
    
    public boolean eliminar(int id) {
 
+       // Buscar la categoría por su ID
     Categoria categoria = buscarPorId(id);
 
     if (categoria == null) {
         return false;
     }
-
+     // Eliminar la categoría
     data.getCategorias().remove(categoria);
-
+// Guardar los cambios
     Persistencia.guardar(data);
 
     return true;

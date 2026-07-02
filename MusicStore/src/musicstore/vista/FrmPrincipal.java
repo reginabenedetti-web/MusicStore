@@ -62,10 +62,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         btnUsuarios.setText("Usuarios");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedoresActionPerformed(evt);
+            }
+        });
 
         btnProductos.setText("Productos");
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
+            }
+        });
 
         btnCategorias.setText("Categorias");
         btnCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +94,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnReportes.setText("Reportes");
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,7 +160,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
+       FrmCliente frmCliente = new FrmCliente(data);
+       frmCliente.setVisible(true);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
@@ -149,6 +170,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         frmCategorias.setVisible(true);
     }//GEN-LAST:event_btnCategoriasActionPerformed
+
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+        FrmProveedor frmProveedor = new FrmProveedor(data);
+        frmProveedor.setVisible(true);
+    }//GEN-LAST:event_btnProveedoresActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+        FrmUsuario frmUsuario = new FrmUsuario(data);
+        frmUsuario.setVisible(true);
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        FrmProducto frmProducto = new FrmProducto(data);
+        frmProducto.setVisible(true);
+    }//GEN-LAST:event_btnProductosActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
