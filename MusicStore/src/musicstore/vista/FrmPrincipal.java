@@ -90,6 +90,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         btnVentas.setText("Ventas");
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
+            }
+        });
 
         btnReportes.setText("Reportes");
 
@@ -189,6 +194,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FrmProducto frmProducto = new FrmProducto(data);
         frmProducto.setVisible(true);
     }//GEN-LAST:event_btnProductosActionPerformed
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+       FrmVenta frmVentas = new FrmVenta(data, usuario);
+        frmVentas.setVisible(true);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

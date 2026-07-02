@@ -269,7 +269,7 @@ public class FrmCliente extends javax.swing.JFrame {
 
         // Obtener los datos ingresados
         String nombre = txtNombre.getText().trim();
-        String apellido = txtNombre.getText().trim();
+        String apellido = txtApellido.getText().trim();
         String telefono = txtTelefono.getText().trim();
         String email = txtEmail.getText().trim();
 
