@@ -38,7 +38,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         // Eliminar todas las filas existentes
         modelo.setRowCount(0);
 
-        // Recorrer la lista de categorías
+        // Recorrer la lista de usuarios
         for (Usuario u : data.getUsuarios()) {
             // Agregar una nueva fila a la tabla
             modelo.addRow(new Object[]{
@@ -55,7 +55,8 @@ public class FrmUsuario extends javax.swing.JFrame {
         if (txtId.getText().isBlank()
                 || txtNombre.getText().isBlank()
                 || txtApellido.getText().isBlank()
-                || txtNombreUsuario.getText().isBlank())
+                || txtNombreUsuario.getText().isBlank()
+                || txtPsw.getText().isBlank())
                 {
 
             JOptionPane.showMessageDialog(
@@ -267,7 +268,7 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         // Obtener los datos ingresados
         String nombre = txtNombre.getText().trim();
-        String apellido = txtNombre.getText().trim();
+        String apellido = txtApellido.getText().trim();
         String nombreUsuario = txtNombreUsuario.getText().trim();
         String password = txtPsw.getText().trim();
         
